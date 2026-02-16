@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hazem Donor Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-one" aria-hidden="true"></div>
+  <div class="bg-orb orb-two" aria-hidden="true"></div>
+
+  <div id="flash" class="flash hidden" role="status" aria-live="polite"></div>
+
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <p id="auth-eyebrow" class="eyebrow">Secure Access</p>
+      <h1 id="auth-title">Sign In</h1>
+      <p id="auth-desc" class="muted">Sign in to continue. New users can create an account.</p>
+
+      <div id="auth-mode-tabs" class="auth-tabs" role="tablist" aria-label="Auth mode">
+        <button id="auth-login-tab" class="auth-tab active" type="button" data-mode="login">Login</button>
+        <button id="auth-signup-tab" class="auth-tab" type="button" data-mode="signup">Create Account</button>
+      </div>
+
+      <form id="login-form" class="auth-form" autocomplete="on">
+        <label class="field-card">
+          <span id="login-username-label" class="field-label">Username</span>
+          <input id="login-username" class="field-input" type="text" autocomplete="username" required />
+        </label>
+        <label class="field-card">
+          <span id="login-password-label" class="field-label">Password</span>
+          <input id="login-password" class="field-input" type="password" autocomplete="current-password" required />
+        </label>
+        <button id="login-btn" type="submit">Login</button>
+        <button id="continue-guest-btn" type="button" class="ghost-btn">Continue as Guest</button>
+      </form>
+
+      <form id="signup-form" class="auth-form hidden" autocomplete="on">
+        <label class="field-card">
+          <span id="signup-username-label" class="field-label">Username</span>
+          <input id="signup-username" class="field-input" type="text" autocomplete="username" required />
+        </label>
+        <label class="field-card">
+          <span id="signup-password-label" class="field-label">Password</span>
+          <input id="signup-password" class="field-input" type="password" autocomplete="new-password" required />
+        </label>
+        <label class="field-card">
+          <span id="signup-confirm-label" class="field-label">Confirm Password</span>
+          <input id="signup-confirm" class="field-input" type="password" autocomplete="new-password" required />
+        </label>
+        <button id="signup-btn" type="submit">Create Account</button>
+      </form>
+    </div>
+  </section>
+
+  <div id="app-shell" class="container hidden">
+    <header class="topbar">
+      <div>
+        <p id="eyebrow-text" class="eyebrow">Donor Workspace</p>
+        <h1 id="app-title">Hazem Donor Report</h1>
+      </div>
+      <div class="header-actions">
+        <nav id="page-nav" class="page-nav" aria-label="Pages">
+          <button id="dashboard-tab-btn" class="page-tab active" data-page="dashboard-page" type="button">Dashboard</button>
+          <button id="admin-tab-btn" class="page-tab" data-page="admin-page" type="button">Admin</button>
+          <button id="settings-tab-btn" class="page-tab" data-page="settings-page" type="button">Settings</button>
+        </nav>
+        <div class="session-actions">
+          <span id="session-user-pill" class="pill session-pill">User</span>
+          <button id="logout-btn" type="button" class="ghost-btn">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="dashboard-page" class="page-section">
+        <div class="section-head">
+          <h2 id="dashboard-title">Dashboard</h2>
+        </div>
+        <section class="dashboard-hub card">
+          <div class="utility-bar dashboard-utility">
+            <div id="search-shell" class="search-shell" role="search" aria-label="Search donors">
+              <label id="table-search-label" for="table-search" class="sr-only">Search by name or student ID</label>
+              <span class="search-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                  <path d="M10 4a6 6 0 1 0 3.77 10.67l4.78 4.78a1 1 0 0 0 1.42-1.42l-4.78-4.78A6 6 0 0 0 10 4zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+                </svg>
+              </span>
+              <input
+                id="table-search"
+                class="search-input"
+                type="search"
+                placeholder="Search by name or student ID"
+                autocomplete="off"
+              />
+              <button id="clear-search-btn" type="button" class="ghost-btn">Clear</button>
+            </div>
+            <p id="search-meta" class="muted search-meta">Showing all rows</p>
+          </div>
+          <section id="dashboard-table-wrap" class="table-shell dashboard-table-shell"></section>
+        </section>
+      </section>
+
+      <section id="admin-page" class="page-section hidden">
+        <div class="section-head">
+          <h2 id="admin-title">Admin</h2>
+          <div id="connection-pill" class="pill syncing">Syncing...</div>
+        </div>
+        <p id="admin-desc" class="muted">Account No. 1 is the primary admin. Admins can promote other accounts.</p>
+
+        <div id="admin-content">
+          <div id="admin-subnav" class="admin-subnav" role="tablist" aria-label="Admin pages">
+            <button id="admin-donors-view-btn" class="admin-subtab active" type="button" data-admin-view="donors">Donors</button>
+            <button id="admin-accounts-view-btn" class="admin-subtab" type="button" data-admin-view="accounts">Accounts</button>
+          </div>
+
+          <section id="admin-donors-view">
+            <div id="admin-controls" class="toolbar">
+              <div class="toolbar-meta">
+                <span id="admin-badge">Admin Mode</span>
+                <span id="quick-actions-label" class="muted">Quick actions</span>
+              </div>
+              <div class="toolbar-actions">
+                <button id="refresh-btn" type="button" class="ghost-btn">Refresh Data</button>
+                <button id="undo-btn" type="button" class="ghost-btn">Undo Delete</button>
+              </div>
+            </div>
+
+            <section id="admin-table-wrap" class="table-shell"></section>
+
+            <section id="add-row-wrap" class="card">
+              <div class="card-head">
+                <h3 id="add-row-title">Add Row</h3>
+                <button id="clear-add-row-btn" type="button" class="ghost-btn">Clear</button>
+              </div>
+              <p id="add-row-desc" class="muted">Fill in each column directly.</p>
+              <div id="add-row-fields" class="field-grid"></div>
+              <div class="row-actions">
+                <button id="add-row-btn" type="button">Add Row</button>
+              </div>
+            </section>
+          </section>
+
+          <section id="admin-accounts-view" class="hidden">
+            <section class="card">
+              <div class="card-head">
+                <h3 id="accounts-title">Accounts</h3>
+                <button id="refresh-accounts-btn" type="button" class="ghost-btn">Refresh Accounts</button>
+              </div>
+              <p id="accounts-desc" class="muted">Passwords are hidden. Use actions to grant or remove admin access.</p>
+              <section id="accounts-table-wrap" class="table-shell"></section>
+            </section>
+          </section>
+        </div>
+      </section>
+
+      <section id="settings-page" class="page-section hidden">
+        <div class="section-head">
+          <h2 id="settings-page-title">Settings</h2>
+        </div>
+        <p id="settings-page-desc" class="muted">Customize language and visuals for this browser only.</p>
+
+        <div class="settings-layout">
+          <section class="card setting-card">
+            <div class="card-head">
+              <h3 id="settings-language-title">Language</h3>
+            </div>
+            <p id="settings-language-desc" class="muted">Choose your interface language.</p>
+            <div id="settings-language-buttons" class="language-buttons" role="group" aria-label="Language options">
+              <button id="settings-lang-en-btn" type="button" class="lang-btn" data-lang="en">English</button>
+              <button id="settings-lang-ar-btn" type="button" class="lang-btn" data-lang="ar">العربية</button>
+            </div>
+            <p id="settings-note" class="muted settings-note">Only applies on this browser.</p>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="edit-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal="true"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+      <div class="card-head">
+        <h3 id="edit-modal-title">Edit Row</h3>
+        <button id="close-edit-modal-btn" type="button" class="ghost-btn">Close</button>
+      </div>
+      <p id="edit-row-label" class="muted">Editing row</p>
+      <div id="edit-row-fields" class="field-grid"></div>
+      <div class="row-actions">
+        <button id="save-edit-btn" type="button">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
